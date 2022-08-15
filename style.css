@@ -61,3 +61,61 @@ img {
   box-shadow: 0 2px 5px 0px skyblue;
   background-color: whitesmoke;
 }
+/** Blinking border dode test **/
+html,
+body {
+  margin: 0;
+  padding: 0;
+  outline-color: red;
+  outline-style: solid;
+  outline-width: 10px;
+  outline-offset: -10px;
+
+  color: #222;
+  animation-name: outline-color;
+  animation-duration: 2s;
+  animation-iteration-count: infinite;
+}
+
+H1 {
+  color: #222;
+  animation-name: text;
+  animation-duration: 2s;
+  animation-iteration-count: infinite;
+}
+
+@keyframes text {
+  0% {
+    color: #222;
+  }
+  50% {
+    color: #4285f4;
+  }
+  100% {
+    color: #222;
+  }
+}
+
+@keyframes color {
+  0% {
+    background-color: #222;
+  }
+  50% {
+    background-color: #4285f4;
+  }
+  100% {
+    background-color: #222;
+  }
+}
+
+@keyframes outline-color {
+  0% {
+    outline-color: #222;
+  }
+  50% {
+    outline-color: #e41f1f;
+  }
+  100% {
+    outline-color: #222;
+  }
+}
