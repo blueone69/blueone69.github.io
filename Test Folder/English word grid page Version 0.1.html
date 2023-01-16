@@ -1,0 +1,103 @@
+<html>
+  <head>
+    <style>
+      /* Add some styling for the words */
+      .word {
+        /* Make the words appear as blocks */
+        display: block;
+        /* Add some padding to the words */
+        padding: 5px;
+        /* Add a border to the words */
+        border: 1px solid black;
+        /* Add some margin to the words */
+        margin: 5px;
+        /* Add a cursor to indicate that the words are clickable */
+        cursor: pointer;
+        /* Set the position of the words to absolute */
+        position: absolute;
+      }
+      /* Add some styling for the word container */
+      #word-container {
+        /* Add a border to the word container */
+        border: 1px solid black;
+        /* Set the position of the word container to relative */
+        position: relative;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Add a container element to hold the words -->
+    <div id="word-container">
+      <!-- Add 5 word elements -->
+      <span class="word">aardvark</span>
+      <span class="word">abacus</span>
+      <span class="word">abandon</span>
+      <span class="word">abashed</span>
+      <span class="word">abate</span>
+    </div>
+    <!-- Add a script to handle zooming in and out -->
+    <script>
+      // Get the word container element
+      const wordContainer = document.getElementById("word-container");
+      // Set the initial zoom level
+      let zoom = 1;
+      // Add an event listener to the word container to handle zooming
+      wordContainer.addEventListener("wheel", event => {
+        // Calculate the new zoom level
+        zoom += event.deltaY * -0.001;
+        // Clamp the zoom level to a minimum of 1
+        zoom = Math.max(1, zoom);
+        // Update the word container's transform to reflect the new zoom level
+        wordContainer.style.transform = `scale(${zoom})`;
+      });
+    </script>
+    <!-- Add a script to handle displaying definitions when a word is clicked -->
+    <script>
+      // Add an event listener to the word container to handle clicks on the words
+      wordContainer.addEventListener("click", event => {
+        // Get the clicked element
+        const target = event.target;
+        // Check if the clicked element is a word
+        if (target.classList.contains("word")) {
+          // Get the word from the clicked element's text content
+          const word = target.textContent;
+          // Look up the definition of the word
+          const definition = getDefinition(word);
+          // Display the definition
+          alert(definition);
+        }
+      });
+      // Define a function to retrieve the definition of a word
+      function getDefinition(word) {
+        // Return a placeholder definition for now
+        return `The definition of "${word}" is...`;
+      }
+    </script>
+    <!-- Add a script to randomly position the words -->
+    <!-- Add a script to randomly position the words -->
+    <script>
+      // Get all of the word elements
+      const words = document.querySelectorAll(".word");
+      // Set the maximum and minimum possible values for the top and left positions of the words
+      const maxTop = window.innerHeight - 50;
+      const minTop = 50;
+      const maxLeft = window.innerWidth - 50;
+      const minLeft = 50;
+      // Set the maximum and minimum font sizes for the words
+      const maxFontSize = 72;
+      const minFontSize = 12;
+      // Iterate through the word elements
+      for (const word of words) {
+        // Generate random top and left positions for the word
+        const top = Math.random() * (maxTop - minTop) + minTop;
+        const left = Math.random() * (maxLeft - minLeft) + minLeft;
+        // Generate a random font size for the word
+        const fontSize = Math.random() * (maxFontSize - minFontSize) + minFontSize;
+        // Set the top, left, and font size of the word using the style property
+        word.style.top = `${top}px`;
+        word.style.left = `${left}px`;
+        word.style.fontSize = `${fontSize}px`;
+      }
+    </script>
+  </body>
+</html>

@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>My Portfolio</title>
+  <style>
+    /* Add some style to the page */
+    body {
+    position: relative;
+    z-index: 0;
+      font-family: sans-serif;
+      text-align: center;
+      background-image: url('ash-from-modern-afflatus-NQ6Lh81BTRs-unsplash.jpg');
+      /*background-position: center;
+      background-size: cover;
+      */
+    }
+        /* Style the element with the animated background image */
+    .animated-background {
+    background-image: url('ash-from-modern-afflatus-NQ6Lh81BTRs-unsplash.jpg'); /* Set the background image */
+    background-size: cover; /* Cover the entire element with the image */
+    background-position: center; /* Center the image in the element */
+    width: 100%;
+    transform: translateZ(0);
+    height: 100%;
+    animation: drift 3s linear infinite; /* Animate the background image with the "drift" animation */ 
+}
+
+    /* Define the "drift" animation */
+    @keyframes drift {
+    /* Move the image to the left by 10% of the element's size */
+    0% {
+        background-position: 0 0;
+        transform: translateZ(0);
+    }
+    50% {
+        background-position: -3% 0;
+
+    }
+    100% {
+        background-position: 0 0;
+    }
+    }
+
+
+    .overlay {
+      position: absolute;
+      z-index: 1;
+      top: 0;
+      left: 0;
+      width: 200%;
+      height: 200%;
+      background-color: rgba(173, 173, 173, 0.5);
+      filter: blur(5px);
+      filter: brightness(1.5);
+      -webkit-backdrop-filter: blur(10px);
+    }
+
+    .card-container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      z-index: 2;
+    }
+
+    .card {
+      /* Style the card */
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 300px;
+      height: 400px;
+      margin: 10px;
+      box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.5), inset -10px -10px 20px rgba(255, 255, 255, 0.385);
+      background-color: rgba(221, 221, 221, 0.488);
+      z-index: 2;
+      border:1px solid rgba(255, 255, 255, 0.651);
+      border-radius: 10px;
+      transition: 1s; /* Add a transition */
+    }
+
+    .card:hover {
+      box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.5), inset -10px -10px 20px rgba(255, 255, 255, 0.385);
+      transform: scale(104%);
+      transition: 1s; /* Add a transition */
+    }
+    .card-image {
+      /* Style the image */
+      width: 100%;
+      height: 60%;
+      object-fit: cover;
+      border-radius: 10px 10px 0 0;
+      filter: blur(0.1px);
+    }
+   
+    .card-text {
+      /* Style the text */
+      padding: 20px;
+      text-align: center;
+    }
+    .card-text h3 {
+      /* Style the heading */
+      margin: 0;
+      font-size: 22px;
+    }
+    .card-text p {
+      /* Style the paragraph */
+      margin: 10px 0;
+      font-size: 16px;
+      color: #666;
+    }
+    .full-screen {
+    position: fixed; /* Fix the element to the viewport */
+    top: 0; /* Set the top edge to the top of the viewport */
+    right: 0; /* Set the right edge to the right of the viewport */
+    bottom: 0; /* Set the bottom edge to the bottom of the viewport */
+    left: 0; /* Set the left edge to the left of the viewport */
+    }   
+
+    /* Add a media query for smaller screens */
+    @media (max-width: 768px) {
+      .card {
+        width: 80%;
+      }
+    }
+   .title{
+    position: relative;
+    z-index: 4;
+
+   }
+ 
+  </style>
+</head>
+<body class="">
+     <!-- Overlay blur -->
+<div class="overlay full-screen"></div>
+    <!-- Title-->
+    <div class="title"><h1>My Portfolio</h1></div>
+    <!-- Card container-->
+    <div class="card-container">
+      <!-- Add a card for each project -->
+      <div class="card">
+        <img class="card-image" src="ash-from-modern-afflatus-NQ6Lh81BTRs-unsplash.jpg" alt="Project 1">
+        <div class="card-text">
+          <h3>Project 1</h3>
+          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. In ornare leo vel mauris vehicula, a aliquet massa ornare.</p>
+        </div>
+      </div>
+    <div class="card">
+      <img class="card-image" src="ash-from-modern-afflatus-NQ6Lh81BTRs-unsplash.jpg" alt="Project 2">
+      <div class="card-text">
+        <h3>Project 2</h3>
+        <p>Donec quis odio auctor, pharetra diam sit amet, imperdiet tellus. Nulla facilisi. Fusce auctor dignissim diam.</p>
+      </div>
+    </div>
+
+  <script>
+    var card = document.querySelector('.card');
+    var overlay = document.querySelector('.overlay');
+    var closeButton = document.querySelector('.close-button');
+    card.addEventListener('click', function() {
+      overlay.classList.toggle('visible');});
+
+  </script>
+</body>
+</html>
