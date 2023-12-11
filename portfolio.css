@@ -16,6 +16,14 @@ html{
     margin: auto;
      margin-bottom: 25px;
     margin-top: 25px;
+
+
+    display: -ms-flexbox; /* IE10 */
+    display: flex;
+    -ms-flex-wrap: wrap; /* IE10 */
+    flex-wrap: wrap;
+    padding: 0 10px;
+
 }
 .link {
     background-color:crimson;
@@ -32,7 +40,39 @@ html{
 
     margin: auto;
    
-    margin-bottom: -15px;
+    margin-bottom: 15px;
+
+    display: -ms-flexbox; /* IE10 */
+    display: flex;
+    -ms-flex-wrap: wrap; /* IE10 */
+    flex-wrap: wrap;
+    padding: 15px 15px;
+
+    
+}
+.contact {
+    background-color:crimson;
+    border-style: solid;
+    border-width: 3px; 
+    border-color:black;
+    color: rgb(0, 0, 0);
+    align-content: center;  
+
+    text-decoration: none;
+    font-family: Recursive,Arial, Helvetica, sans-serif;
+    padding: 10px;
+    max-width: 75%;
+
+    margin: auto;
+   
+    margin-bottom: 15px;
+
+    display: -ms-flexbox; /* IE10 */
+    display: flex;
+    -ms-flex-wrap: wrap; /* IE10 */
+    flex-wrap: wrap;
+    padding: 15px 15px;
+
     
 }
 
