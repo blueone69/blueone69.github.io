@@ -1,97 +1,19 @@
 @import url("https://fonts.googleapis.com/css2?family=Recursive&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Recursive&family=Roboto&display=swap");
 
+/* Main Styles */
 * {
     box-sizing: border-box;
 }
-html{
+
+html {
    background-color: lightgray; 
-}
-.video {
-    -ms-flex: 25%; /* IE10 */
-    flex: 25%;
-}
-
-.link-box{
-    margin: auto;
-     margin-bottom: 25px;
-    margin-top: 25px;
-
-
-    display: -ms-flexbox; /* IE10 */
-    display: flex;
-    -ms-flex-wrap: wrap; /* IE10 */
-    flex-wrap: wrap;
-    padding: 0 10px;
-
-}
-.link {
-    background-color:crimson;
-    border-style: solid;
-    border-width: 3px; 
-    border-color:black;
-    color: rgb(0, 0, 0);
-    align-content: center;  
-
-    text-decoration: none;
-    font-family: Recursive,Arial, Helvetica, sans-serif;
-    padding: 10px;
-    max-width: 75%;
-
-    margin: auto;
-   
-    margin-bottom: 15px;
-
-    display: -ms-flexbox; /* IE10 */
-    display: flex;
-    -ms-flex-wrap: wrap; /* IE10 */
-    flex-wrap: wrap;
-    padding: 15px 15px;
-
-    
-}
-.contact {
-    background-color:crimson;
-    border-style: solid;
-    border-width: 3px; 
-    border-color:black;
-    color: rgb(0, 0, 0);
-    align-content: center;  
-
-    text-decoration: none;
-    font-family: Recursive,Arial, Helvetica, sans-serif;
-    padding: 10px;
-    max-width: 75%;
-
-    margin: auto;
-   
-    margin-bottom: 15px;
-
-    display: -ms-flexbox; /* IE10 */
-    display: flex;
-    -ms-flex-wrap: wrap; /* IE10 */
-    flex-wrap: wrap;
-    padding: 15px 15px;
-
-    
-}
-
-.link:hover {
-    background-color:lightgreen;
-    cursor: pointer;
-}
-
-a:link {
-    text-decoration: none;
-}
-a:visited {
-    color: black;
 }
 
 body {
-    font-family: Recursive ,Arial;
+    font-family: Recursive, Arial;
     text-align: center;
-    font-size:25px;
+    font-size: 25px;
     font-weight: bold;
     margin: auto;
     align-content: center;
@@ -99,41 +21,101 @@ body {
 
 p {
     font-size: 15px;
-} 
-
-
-iframe {
-    width: 500px; 
-    height: 550px;
 }
 
+/* Header and Navigation */
 .header {
     text-align: center;
     padding: 32px;
 }
 
-.head {
-    background-color:blue;
-    width: 100px;
-    height: 100px;
-    justify-content: center;
-    align-items: center;
+.link-box {
+    margin: auto;
+    margin-bottom: 25px;
+    margin-top: 25px;
+    display: flex;
+    flex-wrap: wrap;
+    padding: 0 10px;
 }
 
-.row {
-    display: -ms-flexbox; /* IE10 */
+.link {
+    background-color: crimson;
+    border-style: solid;
+    border-width: 3px; 
+    border-color: black;
+    color: rgb(0, 0, 0);
+    align-content: center;  
+    text-decoration: none;
+    font-family: Recursive, Arial, Helvetica, sans-serif;
+    padding: 15px;
+    max-width: 75%;
+    margin: auto;
+    margin-bottom: 15px;
     display: flex;
-    -ms-flex-wrap: wrap; /* IE10 */
+    flex-wrap: wrap;
+}
+
+.link:hover {
+    background-color: lightgreen;
+    cursor: pointer;
+}
+
+a:link {
+    text-decoration: none;
+}
+
+a:visited {
+    color: black;
+}
+
+/* Contact Section */
+.contact {
+    background-color: crimson;
+    border-style: solid;
+    border-width: 3px; 
+    border-color: black;
+    color: rgb(0, 0, 0);
+    align-content: center;  
+    text-decoration: none;
+    font-family: Recursive, Arial, Helvetica, sans-serif;
+    padding: 10px;
+    max-width: 75%;
+    margin: auto;
+    margin-bottom: 15px;
+    display: flex;
+    flex-wrap: wrap;
+    padding: 15px;
+}
+
+/* Portfolio Items */
+.portfolio-item {
+    margin: 20px auto;
+    text-align: center;
+}
+
+figure {
+    margin: 10px auto;
+}
+
+figcaption {
+    font-size: 15px;
+    margin-top: 10px;
+}
+
+iframe {
+    width: 500px; 
+    height: 550px;
+}
+/* Grid Layout */
+.row {
+    display: flex;
     flex-wrap: wrap;
     padding: 0 4px;
 }
-/* Create four equal columns that sits next to each other */
 
 .column {
-    -ms-flex: 25%; /* IE10 */
     flex: 25%;
     max-width: 25%;
-    padding: 0 4px;
     padding: 10px;
 }
 
@@ -143,25 +125,17 @@ iframe {
     width: 100%;
 }
 
-.singel_video {
-    max-width: 25%;
-    padding: 10px;
-}
-
-/* Responsive layout - makes a two column-layout instead of four columns */
+/* Responsive Design */
 @media screen and (max-width: 800px) {
     .column {
-    -ms-flex: 50%;
-    flex: 50%;
-      max-width: 50%;
+        flex: 50%;
+        max-width: 50%;
     }
 }
-  
-  /* Responsive layout - makes the two columns stack on top of each other instead of next to each other */
+
 @media screen and (max-width: 600px) {
     .column {
-      -ms-flex: 100%;
-      flex: 100%;
-      max-width: 100%;
+        flex: 100%;
+        max-width: 100%;
     }
 }
