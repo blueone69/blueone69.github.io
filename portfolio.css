@@ -59,6 +59,15 @@ p {
     transition: all 0.3s ease;
 }
 
+.link a {
+    color: #E5E7EB;
+    text-decoration: none;
+}
+
+.link a:visited {
+    color: #E5E7EB;
+}
+
 .link:hover {
     background-color: #7C3AED;
     cursor: pointer;
@@ -67,11 +76,12 @@ p {
 }
 
 a:link {
+    color: #6D28D9;
     text-decoration: none;
 }
 
 a:visited {
-    color: #5B21B6;
+    color: #6D28D9;
 }
 
 /* Contact Section */
