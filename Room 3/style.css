@@ -3,6 +3,23 @@ html,body {
     color: #E5E7EB;
     align-content: center;
     text-align: center;
-    padding-top: 200px;
     font-family: Helvetica, arial, sans-serif;
+    margin: 0;
+    padding: 200px 20px 20px 20px;
+    width: 100%;
+    max-width: 100%;
+    overflow-x: hidden;
+    box-sizing: border-box;
+}
+
+/* Responsive adjustments */
+@media screen and (max-width: 600px) {
+    html, body {
+        padding: 200px 15px 15px 15px;
+        font-size: 16px;
+    }
+    
+    p {
+        font-size: 1.2em;
+    }
 }
