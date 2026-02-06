@@ -15,9 +15,13 @@ body {
     text-align: center;
     font-size: 25px;
     font-weight: bold;
-    margin: auto;
+    margin: 0;
+    padding: 0;
     align-content: center;
     color: #E5E7EB;
+    width: 100%;
+    max-width: 100%;
+    overflow-x: hidden;
 }
 
 p {
@@ -107,10 +111,12 @@ a:visited {
 .portfolio-item {
     margin: 20px auto;
     text-align: center;
+    padding: 0 10px;
 }
 
 figure {
     margin: 10px auto;
+    max-width: 100%;
 }
 
 figcaption {
@@ -119,9 +125,29 @@ figcaption {
     color: #E5E7EB;
 }
 
+/* Responsive Images - Override inline styles */
+.portfolio-item img,
+.row img {
+    max-width: 100% !important;
+    width: auto !important;
+    height: auto !important;
+    display: block;
+    margin: 0 auto;
+}
+
+/* Responsive Videos */
+.portfolio-item video {
+    max-width: 100% !important;
+    width: 100% !important;
+    height: auto !important;
+}
+
+/* Responsive Iframes */
 iframe {
-    width: 500px; 
+    width: 100%;
+    max-width: 800px;
     height: 550px;
+    border: none;
 }
 /* Grid Layout */
 .row {
@@ -148,11 +174,61 @@ iframe {
         flex: 50%;
         max-width: 50%;
     }
+    
+    iframe {
+        height: 400px;
+    }
+    
+    .header {
+        padding: 20px 15px;
+    }
+    
+    .header p {
+        font-size: 14px;
+    }
 }
 
 @media screen and (max-width: 600px) {
     .column {
         flex: 100%;
         max-width: 100%;
+    }
+    
+    body {
+        font-size: 20px;
+    }
+    
+    .header {
+        padding: 15px 10px;
+    }
+    
+    .header p {
+        font-size: 13px;
+        text-align: left;
+        padding: 0 5px;
+    }
+    
+    iframe {
+        height: 300px;
+    }
+    
+    figcaption {
+        font-size: 13px;
+        padding: 0 5px;
+        text-align: left;
+    }
+    
+    .link {
+        width: 95%;
+        max-width: 95%;
+    }
+    
+    .portfolio-item {
+        margin: 15px auto;
+        padding: 0 5px;
+    }
+    
+    .row {
+        padding: 0;
     }
 }
