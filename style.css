@@ -19,19 +19,21 @@
   font-family: "Roboto", sans-serif;
   height: 25px;
   outline-style: auto;
-  background-color: navy;
-  color: aliceblue;
+  background-color: #6D28D9;
+  color: #E5E7EB;
   font-size: 20px;
   padding: 15px;
   max-width: 500px;
   margin: auto;
   margin-bottom: 10px;
   margin-top: 10px;
+  box-shadow: 0 0 15px rgba(109, 40, 217, 0.15);
+  transition: all 0.3s ease;
 }
 .button:hover {
-  background-color: black;
+  background-color: #7C3AED;
   cursor: pointer;
-  box-shadow: 0 3px 5px 0px darkgray;
+  box-shadow: 0 0 20px rgba(109, 40, 217, 0.3);
   padding: 18px;
 }
 .center {
@@ -64,27 +66,28 @@ img {
   height: 50px;
 
   border: 0px solid black;
-  box-shadow: 0 2px 5px 0px skyblue;
-  background-color: whitesmoke;
+  box-shadow: 0 0 10px rgba(109, 40, 217, 0.12);
+  background-color: rgba(109, 40, 217, 0.05);
 }
 /** Blinking border dode test **/
 html,
 body {
   margin: 0;
   padding: 0;
-  outline-color: red;
+  outline-color: #6D28D9;
   outline-style: solid;
   outline-width: 10px;
   outline-offset: -10px;
 
-  color: #222;
+  color: #E5E7EB;
+  background-color: #0E1116;
   animation-name: outline-color;
   animation-duration: 2s;
   animation-iteration-count: infinite;
 }
 
 H1 {
-  color: #222;
+  color: #E5E7EB;
   animation-name: text;
   animation-duration: 2s;
   animation-iteration-count: infinite;
@@ -92,37 +95,37 @@ H1 {
 
 @keyframes text {
   0% {
-    color: #222;
+    color: #E5E7EB;
   }
   50% {
-    color: #4285f4;
+    color: #6D28D9;
   }
   100% {
-    color: #222;
+    color: #E5E7EB;
   }
 }
 
 @keyframes color {
   0% {
-    background-color: #222;
+    background-color: #0E1116;
   }
   50% {
-    background-color: #4285f4;
+    background-color: #6D28D9;
   }
   100% {
-    background-color: #222;
+    background-color: #0E1116;
   }
 }
 
 @keyframes outline-color {
   0% {
-    outline-color: #222;
+    outline-color: #0E1116;
   }
   50% {
-    outline-color: #e41f1f;
+    outline-color: #6D28D9;
   }
   100% {
-    outline-color: #222;
+    outline-color: #0E1116;
   }
 }
 /**  Added Css code from chatGpt for test  **/

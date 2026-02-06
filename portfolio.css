@@ -7,7 +7,7 @@
 }
 
 html {
-   background-color: lightgray; 
+   background-color: #0E1116; 
 }
 
 body {
@@ -17,10 +17,12 @@ body {
     font-weight: bold;
     margin: auto;
     align-content: center;
+    color: #E5E7EB;
 }
 
 p {
     font-size: 15px;
+    color: #E5E7EB;
 }
 
 /* Header and Navigation */
@@ -39,11 +41,11 @@ p {
 }
 
 .link {
-    background-color: crimson;
+    background-color: #6D28D9;
     border-style: solid;
-    border-width: 3px; 
-    border-color: black;
-    color: rgb(0, 0, 0);
+    border-width: 2px; 
+    border-color: #8B5CF6;
+    color: #E5E7EB;
     align-content: center;  
     text-decoration: none;
     font-family: Recursive, Arial, Helvetica, sans-serif;
@@ -53,11 +55,15 @@ p {
     margin-bottom: 15px;
     display: flex;
     flex-wrap: wrap;
+    box-shadow: 0 0 15px rgba(109, 40, 217, 0.15);
+    transition: all 0.3s ease;
 }
 
 .link:hover {
-    background-color: lightgreen;
+    background-color: #7C3AED;
     cursor: pointer;
+    box-shadow: 0 0 20px rgba(109, 40, 217, 0.3);
+    transform: translateY(-2px);
 }
 
 a:link {
@@ -65,26 +71,26 @@ a:link {
 }
 
 a:visited {
-    color: black;
+    color: #E5E7EB;
 }
 
 /* Contact Section */
 .contact {
-    background-color: crimson;
+    background-color: rgba(109, 40, 217, 0.1);
     border-style: solid;
-    border-width: 3px; 
-    border-color: black;
-    color: rgb(0, 0, 0);
+    border-width: 1px; 
+    border-color: #6D28D9;
+    color: #E5E7EB;
     align-content: center;  
     text-decoration: none;
     font-family: Recursive, Arial, Helvetica, sans-serif;
-    padding: 10px;
-    max-width: 75%;
+    padding: 15px;
+    max-width: 400px;
     margin: auto;
     margin-bottom: 15px;
-    display: flex;
-    flex-wrap: wrap;
-    padding: 15px;
+    display: inline-block;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(109, 40, 217, 0.12);
 }
 
 /* Portfolio Items */
@@ -100,6 +106,7 @@ figure {
 figcaption {
     font-size: 15px;
     margin-top: 10px;
+    color: #E5E7EB;
 }
 
 iframe {
