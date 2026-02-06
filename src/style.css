@@ -19,19 +19,21 @@
   font-family: "Roboto", sans-serif;
   height: 25px;
   outline-style: auto;
-  background-color: #2563eb;
-  color: aliceblue;
+  background-color: #6D28D9;
+  color: #E5E7EB;
   font-size: 20px;
   padding: 15px;
   max-width: 500px;
   margin: auto;
   margin-bottom: 10px;
   margin-top: 10px;
+  box-shadow: 0 0 15px rgba(109, 40, 217, 0.15);
+  transition: all 0.3s ease;
 }
 .button:hover {
-  background-color: #1e40af;
+  background-color: #7C3AED;
   cursor: pointer;
-  box-shadow: 0 3px 5px 0px darkgray;
+  box-shadow: 0 0 20px rgba(109, 40, 217, 0.3);
   padding: 18px;
 }
 
@@ -58,6 +60,6 @@ img {
   height: 50px;
 
   border: 0px solid black;
-  box-shadow: 0 2px 5px 0px #93c5fd;
-  background-color: whitesmoke;
+  box-shadow: 0 0 10px rgba(109, 40, 217, 0.12);
+  background-color: rgba(109, 40, 217, 0.05);
 }
