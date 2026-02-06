@@ -78,12 +78,24 @@ body {
   outline-style: solid;
   outline-width: 10px;
   outline-offset: -10px;
+  width: 100%;
+  max-width: 100%;
+  overflow-x: hidden;
+  box-sizing: border-box;
 
   color: #E5E7EB;
   background-color: #0E1116;
   animation-name: outline-color;
   animation-duration: 2s;
   animation-iteration-count: infinite;
+}
+
+/* Responsive adjustments */
+@media screen and (max-width: 600px) {
+  html, body {
+    outline-width: 5px;
+    outline-offset: -5px;
+  }
 }
 
 H1 {
