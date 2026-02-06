@@ -15,11 +15,11 @@
   font-style: bold;
 }
 
-.button {
+  .button {
   font-family: "Roboto", sans-serif;
   height: 25px;
   outline-style: auto;
-  background-color: navy;
+  background-color: #2563eb;
   color: aliceblue;
   font-size: 20px;
   padding: 15px;
@@ -29,7 +29,7 @@
   margin-top: 10px;
 }
 .button:hover {
-  background-color: black;
+  background-color: #1e40af;
   cursor: pointer;
   box-shadow: 0 3px 5px 0px darkgray;
   padding: 18px;
@@ -58,6 +58,6 @@ img {
   height: 50px;
 
   border: 0px solid black;
-  box-shadow: 0 2px 5px 0px skyblue;
+  box-shadow: 0 2px 5px 0px #93c5fd;
   background-color: whitesmoke;
 }
