@@ -1,25 +1,54 @@
-<!--
-    Portfolio site made by me Felix Holm 
-    Version: 0.1   
-    --------------------------------------
-    Up comming changes:
-    -   Implement main hub site into main
-    -   update protfolio to v.2.0
-    -   import new porjects
-    -   Add ABB ui design project from MDU
-
--->
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Portfolio</title>
-    <link rel="stylesheet" href="portfolio.css">
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Felix Holm — Portfolio</title>
+  <meta property="og:title" content="Felix Holm — Portfolio" />
+  <meta property="og:description" content="3D Game Artist, Designer &amp; Creator" />
+  <meta property="og:image" content="/Environment_Art_1.png" />
+  <!-- CSS design system -->
+  <link rel="stylesheet" href="/src/styles/variables.css" />
+  <link rel="stylesheet" href="/src/styles/typography.css" />
+  <link rel="stylesheet" href="/src/styles/glassmorphism.css" />
+  <link rel="stylesheet" href="/src/styles/holographic.css" />
+  <link rel="stylesheet" href="/src/styles/layout.css" />
+  <link rel="stylesheet" href="/src/styles/fallback.css" />
 </head>
 <body>
+  <!-- WebGL canvas -->
+  <canvas id="webgl-canvas" aria-hidden="true"></canvas>
+  <!-- Invisible scroll driver (500vh) -->
+  <div id="scroll-driver" aria-hidden="true"></div>
+  <!-- Fixed overlay: all UI panels -->
+  <div id="scene-overlay">
+    <section id="section-hero"      class="scene-section" aria-label="Introduction"></section>
+    <section id="section-nav"       class="scene-section" aria-label="Navigation"></section>
+    <section id="section-cinematic" class="scene-section" aria-label="Featured Work">
+      <div style="width:100%;max-width:1100px">
+        <h2 class="section-heading holo-text">Featured Work</h2>
+        <div class="cinematic-grid" id="cinematic-grid"></div>
+      </div>
+    </section>
+    <section id="section-portfolio" class="scene-section" aria-label="Portfolio">
+      <div style="width:100%;max-width:1200px">
+        <h2 class="section-heading holo-text">Portfolio</h2>
+        <div class="portfolio-grid" id="portfolio-grid"></div>
+      </div>
+    </section>
+    <section id="section-archival"  class="scene-section" aria-label="Archival Work">
+      <div style="width:100%;max-width:1200px">
+        <h2 class="section-heading holo-text--violet">Archival Memory</h2>
+        <p class="holo-label" style="margin-bottom:2rem;opacity:.5;">::  ARCHIVED RECORDS — EARLY WORK ::</p>
+        <div class="archival-grid" id="archival-grid"></div>
+      </div>
+    </section>
+    <section id="section-contact"   class="scene-section" aria-label="Contact"></section>
+  </div>
+  <script type="module" src="/src/main.js"></script>
+  <!-- BEGIN OLD CONTENT (hidden, replaced by JS-driven UI above) -->
+  <div style="display:none" aria-hidden="true">
     <section class="hero">
         <div class="hero-overlay">
             <h1 class="hero-title">Portfolio</h1>
@@ -374,4 +403,6 @@
     <footer class="contact">
         <p>Contact: felix.holm.1989@gmail.com</p>
     </footer>
+  </div><!-- /END OLD CONTENT -->
+</body>
 </html>

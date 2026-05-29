@@ -1,0 +1,29 @@
+/* ─── Color tokens ─────────────────────────────────────────────────────── */
+:root {
+  --clr-void:       #020510;
+  --clr-deep:       #060D20;
+  --clr-panel:      rgba(6, 13, 32, 0.50);
+  --clr-panel-edge: rgba(0, 212, 255, 0.22);
+
+  --clr-cyan:       #00D4FF;
+  --clr-cyan-dim:   rgba(0, 212, 255, 0.45);
+  --clr-cyan-glow:  rgba(0, 212, 255, 0.12);
+  --clr-violet:     #7B00FF;
+  --clr-violet-dim: rgba(123, 0, 255, 0.45);
+  --clr-magenta:    #FF0080;
+  --clr-text:       #E2EBF0;
+  --clr-muted:      rgba(226, 235, 240, 0.55);
+  --clr-subdued:    rgba(226, 235, 240, 0.28);
+
+  /* spacing */
+  --space-xs: 0.4rem;
+  --space-sm: 0.8rem;
+  --space-md: 1.6rem;
+  --space-lg: 3.2rem;
+  --space-xl: 6.4rem;
+
+  /* transitions */
+  --transition-fast:   150ms cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-medium: 350ms cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-slow:   700ms cubic-bezier(0.4, 0, 0.2, 1);
+}

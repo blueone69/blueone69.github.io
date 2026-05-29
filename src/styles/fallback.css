@@ -1,0 +1,65 @@
+/* ─── CSS-only fallback for low-end / mobile devices ───────────────────── */
+/* Applied by JS via body.css-fallback when WebGL is unavailable or slow */
+
+body.css-fallback {
+  background-image: url('/Environment_Art_1.png');
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+}
+
+/* Tint overlay to keep legibility */
+body.css-fallback::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background: rgba(2, 5, 16, 0.72);
+  z-index: 0;
+  pointer-events: none;
+}
+
+/* No WebGL canvas, everything in normal flow */
+body.css-fallback #webgl-canvas {
+  display: none;
+}
+
+body.css-fallback #scroll-driver {
+  display: none;
+}
+
+/* Sections render as a normal scrolling column */
+body.css-fallback #scene-overlay {
+  position: relative;
+  overflow: visible;
+  display: flex;
+  flex-direction: column;
+  gap: 4rem;
+  padding: 4rem clamp(1rem, 5vw, 6rem);
+}
+
+body.css-fallback .scene-section {
+  position: relative;
+  opacity: 1;
+  transform: none;
+  pointer-events: auto;
+  padding: 0;
+}
+
+/* Simplify blur for low-end performance */
+@media (prefers-reduced-motion: reduce) {
+  .glass-panel {
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+    background: rgba(6, 13, 32, 0.88);
+  }
+}
+
+body.css-fallback .glass-panel {
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+/* Disable heavy animations in fallback */
+body.css-fallback .holo-flicker {
+  animation: none;
+}

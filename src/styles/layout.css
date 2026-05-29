@@ -1,0 +1,178 @@
+/* ─── Canvas layer ──────────────────────────────────────────────────────── */
+#webgl-canvas {
+  position: fixed;
+  inset: 0;
+  width: 100% !important;
+  height: 100% !important;
+  z-index: 0;
+  pointer-events: none;
+}
+
+/* ─── Invisible scroll driver ───────────────────────────────────────────── */
+/* This element is 500vh tall and is the scroll target for GSAP ScrollTrigger.
+   It is visually invisible but drives the camera animation. */
+#scroll-driver {
+  position: relative;
+  width: 100%;
+  height: 500vh;
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* Hide the main page scrollbar — it is only a GSAP scroll driver.
+   Section content has its own internal scrollbars. */
+html {
+  scrollbar-width: none; /* Firefox */
+}
+html::-webkit-scrollbar {
+  display: none; /* Chrome / Safari / Edge */
+}
+
+/* ─── Fixed overlay: all scene UI ───────────────────────────────────────── */
+#scene-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 10;
+  pointer-events: none; /* children override this individually */
+  overflow: hidden;
+}
+
+/* ─── Scene sections ────────────────────────────────────────────────────── */
+.scene-section {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-lg);
+  opacity: 0;
+  transform: translateY(20px);
+  transition:
+    opacity 0.7s cubic-bezier(0.4, 0, 0.2, 1),
+    transform 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+  pointer-events: none;
+}
+
+.scene-section.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+/* Individual section positioning within the overlay */
+#section-hero {
+  align-items: flex-end;
+  justify-content: flex-start;
+  padding: 0 var(--space-xl) var(--space-xl);
+}
+
+#section-nav {
+  align-items: center;
+  justify-content: center;
+}
+
+#section-cinematic {
+  align-items: flex-start;
+  padding-top: var(--space-xl);
+  overflow: hidden;
+}
+
+#section-portfolio {
+  overflow-y: auto;
+  align-items: flex-start;
+  padding-top: var(--space-xl);
+}
+
+#section-archival {
+  overflow-y: auto;
+  align-items: flex-start;
+  padding-top: var(--space-xl);
+}
+
+#section-contact {
+  align-items: center;
+  justify-content: center;
+}
+
+/* ─── Portfolio grids ───────────────────────────────────────────────────── */
+.cinematic-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-lg);
+  width: 100%;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.portfolio-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: var(--space-md);
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.archival-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: var(--space-md);
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* ─── Contact card ──────────────────────────────────────────────────────── */
+.contact-card {
+  max-width: 480px;
+  width: 100%;
+  text-align: center;
+}
+
+.contact-card a {
+  color: var(--clr-cyan);
+  transition: text-shadow var(--transition-fast);
+}
+
+.contact-card a:hover {
+  text-shadow: 0 0 10px var(--clr-cyan);
+}
+
+/* ─── Scrollbar styling ─────────────────────────────────────────────────── */
+::-webkit-scrollbar {
+  width: 4px;
+}
+::-webkit-scrollbar-track {
+  background: var(--clr-deep);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--clr-cyan-dim);
+  border-radius: 2px;
+}
+
+/* ─── Selection color ───────────────────────────────────────────────────── */
+::selection {
+  background: rgba(0, 212, 255, 0.28);
+  color: #fff;
+}
+
+/* ─── Responsive tweaks ─────────────────────────────────────────────────── */
+@media (max-width: 768px) {
+  #section-hero {
+    padding: var(--space-md);
+    align-items: flex-end;
+  }
+  .glass-panel--hero {
+    padding: var(--space-md);
+  }
+  .portfolio-grid {
+    grid-template-columns: 1fr;
+  }
+  .archival-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .glass-panel--nav {
+    flex-direction: column;
+    align-items: stretch;
+  }
+}
