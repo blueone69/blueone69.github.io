@@ -3,10 +3,8 @@ import { resolve } from 'path';
 
 export default defineConfig({
   root: '.',
-  // publicDir: false prevents Vite from copying the entire project into dist.
-  // Media files live in the repo root and are served directly by the dev server
-  // (and by GitHub Pages from the repo root in production).
-  publicDir: false,
+  // Serve images and other static assets from the repo root.
+  publicDir: '.',
   build: {
     outDir: 'dist',
     rollupOptions: {
