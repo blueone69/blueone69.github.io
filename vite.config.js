@@ -3,8 +3,7 @@ import { resolve } from 'path';
 
 export default defineConfig({
   root: '.',
-  // Serve images and other static assets from the repo root.
-  publicDir: '.',
+  publicDir: false,
   build: {
     outDir: 'dist',
     rollupOptions: {

@@ -33,6 +33,15 @@ jobs:
       - name: Build
         run: npm run build
 
+      - name: Copy static assets to dist
+        run: |
+          # Images and videos from repo root
+          find . -maxdepth 1 \( -name "*.png" -o -name "*.jpg" -o -name "*.mp4" -o -name "*.gif" -o -name "*.webp" \) -exec cp {} dist/ \;
+          # Game room folders
+          cp -r "Room 1" "Room 2" "Room 3" dist/
+          # Standalone pages and their styles
+          cp win.html win.css start.html lovestory.html styleGame.css style.css portfolio.css dist/ 2>/dev/null || true
+
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
