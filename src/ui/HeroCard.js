@@ -55,7 +55,7 @@ export function buildHeroCard(container) {
   // System label
   const sysLabel = document.createElement('div');
   sysLabel.className = 'holo-label';
-  sysLabel.textContent = 'PORTFOLIO.SYS v2.0 — INITIALISED';
+  sysLabel.textContent = 'PORTFOLIO.SYS v2.1 — INITIALISED';
   sysLabel.style.marginBottom = '1.2rem';
   card.appendChild(sysLabel);
 
