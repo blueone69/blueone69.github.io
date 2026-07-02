@@ -1,0 +1,1 @@
+import{h as a,aU as o}from"./three.core-MjEdqQnE.js";function s(t){const e=new a(5678,.8);t.add(e);const i=new o(54527,2.5,30);i.position.set(0,0,-4),t.add(i);const n=new o(8061183,1.8,25);n.position.set(-5,3,-2),t.add(n)}function f(t){}export{s as initEnvironment,f as updateEnvironment};

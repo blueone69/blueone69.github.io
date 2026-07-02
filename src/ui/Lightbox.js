@@ -6,6 +6,78 @@
 let overlay = null;
 let mediaWrap, titleEl, captionEl, tagsEl, yearEl;
 
+function buildImageLink(media, fallbackTitle) {
+  const link = document.createElement('a');
+  link.href = media.src;
+  link.target = '_blank';
+  link.rel = 'noopener noreferrer';
+  link.className = 'lightbox__image-link';
+
+  const img = document.createElement('img');
+  img.src = media.src;
+  img.alt = media.alt || fallbackTitle;
+  img.className = 'lightbox__media';
+
+  link.appendChild(img);
+  return link;
+}
+
+function buildGalleryMedia(media, itemTitle) {
+  if (media.type === 'video') {
+    const vid = document.createElement('video');
+    vid.src = media.src;
+    vid.className = 'lightbox__gallery-img';
+    vid.controls = true;
+    vid.autoplay = false;
+    vid.loop = false;
+    vid.playsInline = true;
+    return vid;
+  }
+
+  if (media.type === 'iframe') {
+    const wrap = document.createElement('div');
+    wrap.className = 'lightbox__iframe-wrap';
+
+    const iframe = document.createElement('iframe');
+    iframe.src = media.src;
+    iframe.title = media.alt || itemTitle;
+    iframe.style.cssText = 'position:absolute;inset:0;width:100%;height:100%;border:none;';
+    iframe.loading = 'lazy';
+    iframe.setAttribute('allowfullscreen', '');
+    iframe.setAttribute('sandbox', 'allow-scripts allow-same-origin allow-popups allow-forms');
+    iframe.setAttribute('referrerpolicy', 'no-referrer-when-downgrade');
+    wrap.appendChild(iframe);
+
+    const container = document.createElement('div');
+    container.className = 'lightbox__gallery-embed';
+    container.appendChild(wrap);
+
+    const fallback = document.createElement('a');
+    fallback.href = media.src;
+    fallback.target = '_blank';
+    fallback.rel = 'noopener noreferrer';
+    fallback.className = 'lightbox__iframe-fallback';
+    fallback.textContent = 'Open video in new tab →';
+    container.appendChild(fallback);
+
+    return container;
+  }
+
+  const link = document.createElement('a');
+  link.href = media.src;
+  link.target = '_blank';
+  link.rel = 'noopener noreferrer';
+  link.className = 'lightbox__gallery-link';
+
+  const img = document.createElement('img');
+  img.src = media.src;
+  img.alt = media.alt || itemTitle;
+  img.className = 'lightbox__gallery-img';
+  link.appendChild(img);
+
+  return link;
+}
+
 function buildDOM() {
   overlay = document.createElement('div');
   overlay.id = 'lightbox';
@@ -114,14 +186,10 @@ export function openLightbox(item) {
       fallback.target = '_blank';
       fallback.rel = 'noopener noreferrer';
       fallback.className = 'lightbox__iframe-fallback';
-      fallback.textContent = 'Open sketch in new tab →';
+      fallback.textContent = 'Open video in new tab →';
       mediaWrap.appendChild(fallback);
     } else {
-      const img = document.createElement('img');
-      img.src = m.src;
-      img.alt = m.alt || item.title;
-      img.className = 'lightbox__media';
-      mediaWrap.appendChild(img);
+      mediaWrap.appendChild(buildImageLink(m, item.title));
       // If this image has an associated interactive sketch, show a link
       if (m.iframe) {
         const link = document.createElement('a');
@@ -134,17 +202,11 @@ export function openLightbox(item) {
       }
     }
   } else {
-    // Multiple images — gallery grid
+    // Mixed-media gallery
     const grid = document.createElement('div');
     grid.className = 'lightbox__gallery';
     item.media.forEach(m => {
-      if (m.type === 'image') {
-        const img = document.createElement('img');
-        img.src = m.src;
-        img.alt = m.alt || item.title;
-        img.className = 'lightbox__gallery-img';
-        grid.appendChild(img);
-      }
+      grid.appendChild(buildGalleryMedia(m, item.title));
     });
     mediaWrap.appendChild(grid);
   }

@@ -39,6 +39,18 @@ function buildMediaEl(mediaObj) {
   return img;
 }
 
+function getPreviewMedia(item, isCinematic) {
+  if (!item.media?.length) return null;
+
+  if (isCinematic) {
+    return item.media.find(media => media.type === 'image')
+      || item.media.find(media => media.type === 'video')
+      || item.media[0];
+  }
+
+  return item.media[0];
+}
+
 function buildTags(tools) {
   const wrap = document.createElement('div');
   wrap.className = 'data-capsule__tags';
@@ -70,23 +82,28 @@ function buildCapsule(item, isCinematic = false) {
   // Media section — show first media item (or first two for multi-image cinematic)
   const mediaWrap = document.createElement('div');
   mediaWrap.className = 'data-capsule__media-wrap';
+  const previewMedia = getPreviewMedia(item, isCinematic);
 
   if (isCinematic && item.media.length > 1) {
-    if (item.media.length === 3) {
+    const imageMedia = item.media.filter(media => media.type === 'image');
+
+    if (imageMedia.length === 3) {
       // First image full width, next two side-by-side
-      mediaWrap.appendChild(buildMediaEl(item.media[0]));
+      mediaWrap.appendChild(buildMediaEl(imageMedia[0]));
       const row = document.createElement('div');
       row.style.cssText = 'display:grid;grid-template-columns:1fr 1fr;';
-      row.appendChild(buildMediaEl(item.media[1]));
-      row.appendChild(buildMediaEl(item.media[2]));
+      row.appendChild(buildMediaEl(imageMedia[1]));
+      row.appendChild(buildMediaEl(imageMedia[2]));
       mediaWrap.appendChild(row);
-    } else {
+    } else if (imageMedia.length >= 2) {
       // Side-by-side layout for dual images
       mediaWrap.style.cssText = 'display:grid;grid-template-columns:1fr 1fr;';
-      item.media.slice(0, 2).forEach(m => mediaWrap.appendChild(buildMediaEl(m)));
+      imageMedia.slice(0, 2).forEach(m => mediaWrap.appendChild(buildMediaEl(m)));
+    } else if (previewMedia) {
+      mediaWrap.appendChild(buildMediaEl(previewMedia));
     }
-  } else {
-    mediaWrap.appendChild(buildMediaEl(item.media[0]));
+  } else if (previewMedia) {
+    mediaWrap.appendChild(buildMediaEl(previewMedia));
   }
 
   card.appendChild(mediaWrap);
