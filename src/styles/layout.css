@@ -122,6 +122,46 @@ html::-webkit-scrollbar {
   margin: 0 auto;
 }
 
+/* ─── Scroll hint (hero landing) ────────────────────────────────────────── */
+.scroll-hint {
+  position: absolute;
+  left: 50%;
+  /* Centered in the gap between the hero card's bottom edge and the fixed
+     #section-indicator bar underneath it. */
+  bottom: 67px;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity var(--transition-slow);
+  z-index: 5;
+}
+
+.scroll-hint.is-visible {
+  opacity: 1;
+}
+
+.scroll-hint__arrow {
+  font-size: 1.5rem;
+  line-height: 1;
+  color: var(--clr-cyan);
+  text-shadow: 0 0 12px var(--clr-cyan-glow);
+  animation: scroll-hint-bounce 1.7s ease-in-out infinite;
+}
+
+@keyframes scroll-hint-bounce {
+  0%, 100% { transform: translateY(0);    opacity: 0.45; }
+  50%      { transform: translateY(10px); opacity: 1;    }
+}
+
+@media (max-width: 768px) {
+  .scroll-hint {
+    bottom: 40px;
+  }
+}
+
 /* ─── Contact card ──────────────────────────────────────────────────────── */
 .contact-card {
   max-width: 480px;
