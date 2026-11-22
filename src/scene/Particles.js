@@ -1,6 +1,6 @@
 import * as THREE from 'three';
 
-const PARTICLE_COUNT = 4000;
+const PARTICLE_COUNT = 2500;
 
 const vertexShader = /* glsl */`
   attribute float aSeed;
@@ -36,9 +36,9 @@ const vertexShader = /* glsl */`
     vec4 mvPos = modelViewMatrix * vec4(pos, 1.0);
     gl_Position = projectionMatrix * mvPos;
 
-    // Distance-based size attenuation
-    float dist = -mvPos.z;
-    gl_PointSize = uSize * (300.0 / dist);
+    // Distance-based size attenuation (clamped to avoid huge close-up overdraw quads)
+    float dist = max(-mvPos.z, 0.1);
+    gl_PointSize = min(uSize * (300.0 / dist), 48.0);
 
     // Fade near camera and far away
     vAlpha = smoothstep(0.0, 2.0, dist) * smoothstep(30.0, 10.0, dist);

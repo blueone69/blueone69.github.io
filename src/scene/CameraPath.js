@@ -23,8 +23,10 @@ const posCurve    = new THREE.CatmullRomCurve3(posPoints,   false, 'catmullrom',
 const lookCurve   = new THREE.CatmullRomCurve3(lookPoints,  false, 'catmullrom', 0.5);
 
 // Shared state for smooth lerping
-const _targetPos  = new THREE.Vector3();
-const _targetLook = new THREE.Vector3();
+const _targetPos   = new THREE.Vector3();
+const _targetLook  = new THREE.Vector3();
+const _currentLook = new THREE.Vector3();
+const _forward     = new THREE.Vector3();
 
 let scrollProgress = { t: 0 };
 
@@ -52,13 +54,11 @@ export function updateCameraPath(camera, lerpFactor = 0.04) {
 
   camera.position.lerp(_targetPos, lerpFactor);
 
-  // Lerp a temporary look-at target then apply
-  const currentLook = new THREE.Vector3();
-  currentLook.copy(camera.position).add(
-    new THREE.Vector3(0, 0, -1).applyQuaternion(camera.quaternion)
-  );
-  currentLook.lerp(_targetLook, lerpFactor);
-  camera.lookAt(currentLook);
+  // Lerp a reusable look-at target then apply
+  _forward.set(0, 0, -1).applyQuaternion(camera.quaternion);
+  _currentLook.copy(camera.position).add(_forward);
+  _currentLook.lerp(_targetLook, lerpFactor);
+  camera.lookAt(_currentLook);
 }
 
 // Programmatically fly camera to a specific waypoint index

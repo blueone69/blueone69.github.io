@@ -1,16 +1,39 @@
 import * as THREE from 'three';
 
 let renderer, scene, camera, clock;
+let loopCallback = null;
+let isPaused = false;
+let isTabHidden = false;
+let isLightboxOpen = false;
+
+function syncLoopState() {
+  if (!renderer || !loopCallback) return;
+  const shouldPause = isTabHidden || isLightboxOpen;
+  if (shouldPause && !isPaused) {
+    isPaused = true;
+    renderer.setAnimationLoop(null);
+  } else if (!shouldPause && isPaused) {
+    isPaused = false;
+    clock.getDelta(); // reset delta so resuming doesn't jump
+    renderer.setAnimationLoop(tick);
+  }
+}
+
+function tick() {
+  const delta = Math.min(clock.getDelta(), 0.1);
+  const elapsed = clock.getElapsedTime();
+  loopCallback(delta, elapsed);
+}
 
 function init(canvas) {
-  // Renderer
+  // Renderer (EffectComposer handles offscreen passes, so main canvas MSAA is unnecessary)
   renderer = new THREE.WebGLRenderer({
     canvas,
-    antialias: true,
+    antialias: false,
     alpha: true,
     powerPreference: 'high-performance',
   });
-  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.5));
   renderer.setSize(window.innerWidth, window.innerHeight);
   renderer.toneMapping = THREE.ACESFilmicToneMapping;
   renderer.toneMappingExposure = 1.1;
@@ -28,8 +51,20 @@ function init(canvas) {
   // Clock
   clock = new THREE.Clock();
 
-  // Resize handler
+  // Resize & visibility handlers
   window.addEventListener('resize', onResize);
+  document.addEventListener('visibilitychange', () => {
+    isTabHidden = document.hidden;
+    syncLoopState();
+  });
+  window.addEventListener('lightbox:open', () => {
+    isLightboxOpen = true;
+    syncLoopState();
+  });
+  window.addEventListener('lightbox:close', () => {
+    isLightboxOpen = false;
+    syncLoopState();
+  });
 }
 
 function onResize() {
@@ -39,14 +74,15 @@ function onResize() {
 }
 
 function animate(callback) {
-  renderer.setAnimationLoop(() => {
-    const delta = clock.getDelta();
-    const elapsed = clock.getElapsedTime();
-    callback(delta, elapsed);
-  });
+  loopCallback = callback;
+  isPaused = false;
+  if (!isTabHidden && !isLightboxOpen) {
+    renderer.setAnimationLoop(tick);
+  }
 }
 
 function stopLoop() {
+  isPaused = true;
   renderer.setAnimationLoop(null);
 }
 

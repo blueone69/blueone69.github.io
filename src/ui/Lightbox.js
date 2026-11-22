@@ -149,8 +149,14 @@ function buildDOM() {
   });
 }
 
+let clearMediaTimer = null;
+
 export function openLightbox(item) {
   if (!overlay) buildDOM();
+  if (clearMediaTimer) {
+    clearTimeout(clearMediaTimer);
+    clearMediaTimer = null;
+  }
 
   // ── Populate media
   mediaWrap.innerHTML = '';
@@ -222,6 +228,7 @@ export function openLightbox(item) {
   // ── Open
   overlay.setAttribute('aria-hidden', 'false');
   overlay.classList.add('is-open');
+  window.dispatchEvent(new CustomEvent('lightbox:open'));
 }
 
 export function closeLightbox() {
@@ -230,4 +237,11 @@ export function closeLightbox() {
   overlay.setAttribute('aria-hidden', 'true');
   // Pause any playing video
   overlay.querySelectorAll('video').forEach(v => v.pause());
+  window.dispatchEvent(new CustomEvent('lightbox:close'));
+  clearMediaTimer = setTimeout(() => {
+    if (overlay && !overlay.classList.contains('is-open') && mediaWrap) {
+      mediaWrap.innerHTML = '';
+    }
+    clearMediaTimer = null;
+  }, 260);
 }

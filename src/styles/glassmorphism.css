@@ -55,6 +55,7 @@
   padding: 0;
   border-radius: 14px;
   overflow: hidden;
+  contain: layout style;
   transition:
     transform var(--transition-medium),
     box-shadow var(--transition-medium),
@@ -83,6 +84,7 @@
   padding: 0;
   border-radius: 8px;
   border-color: rgba(123, 0, 255, 0.3);
+  contain: layout style;
   box-shadow:
     0 0 30px rgba(123, 0, 255, 0.12),
     0 4px 40px rgba(0, 0, 0, 0.5);

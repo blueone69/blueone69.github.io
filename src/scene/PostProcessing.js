@@ -13,19 +13,20 @@ import * as THREE from 'three';
 let composer;
 
 export function initPostProcessing(renderer, scene, camera) {
-  composer = new EffectComposer(renderer);
+  composer = new EffectComposer(renderer, { multisampling: 0 });
 
   // Base render pass
   composer.addPass(new RenderPass(scene, camera));
 
-  // Bloom — neon glow
+  // Bloom — neon glow (mipmapBlur avoids expensive multi-tap Gaussian passes)
   const bloom = new BloomEffect({
     blendFunction: BlendFunction.ADD,
     luminanceThreshold: 0.08,
     luminanceSmoothing: 0.25,
-    intensity: 1.6,
-    radius: 0.85,
-    levels: 8,
+    mipmapBlur: true,
+    intensity: 1.5,
+    radius: 0.8,
+    levels: 5,
   });
 
   // Chromatic aberration — slight sci-fi lens fringing

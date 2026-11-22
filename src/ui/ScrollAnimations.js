@@ -1,6 +1,7 @@
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { ScrollToPlugin } from 'gsap/ScrollToPlugin';
+import { syncVisibleVideos } from './PortfolioRenderer.js';
 
 gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
 
@@ -24,25 +25,25 @@ const CINEMATIC_DEAD  = 0.15;
 // ─── Mouse-move parallax ──────────────────────────────────────────────────
 
 let mouseX = 0, mouseY = 0;
+let parallaxRafId = null;
 const glassEls = [];
+
+function applyParallax() {
+  parallaxRafId = null;
+  for (let i = 0; i < glassEls.length; i++) {
+    const item = glassEls[i];
+    if (item.section && !item.section.classList.contains('is-visible')) continue;
+    item.setX(mouseX * item.depth * 14);
+    item.setY(mouseY * item.depth * 10);
+  }
+}
 
 function onMouseMove(e) {
   mouseX = (e.clientX / window.innerWidth  - 0.5) * 2;  // -1 → 1
   mouseY = (e.clientY / window.innerHeight - 0.5) * 2;
-}
-
-function tickParallax() {
-  glassEls.forEach(({ el, depth }) => {
-    const tx = mouseX * depth * 14;
-    const ty = mouseY * depth * 10;
-    gsap.to(el, {
-      x: tx, y: ty,
-      duration: 1.6,
-      ease: 'power2.out',
-      overwrite: 'auto',
-    });
-  });
-  requestAnimationFrame(tickParallax);
+  if (!parallaxRafId) {
+    parallaxRafId = requestAnimationFrame(applyParallax);
+  }
 }
 
 // ─── Section entry animations ─────────────────────────────────────────────
@@ -53,6 +54,7 @@ export function initScrollAnimations(isFallback = false) {
     document.querySelectorAll('.scene-section').forEach(el => {
       el.classList.add('is-visible');
     });
+    syncVisibleVideos();
     return;
   }
 
@@ -71,7 +73,10 @@ export function initScrollAnimations(isFallback = false) {
     { id: 'section-cinematic', enter: CINEMATIC_ENTER, leave: CINEMATIC_LEAVE },
     { id: 'section-portfolio', enter: 0.40,            leave: 0.61 },
     { id: 'section-archival',  enter: 0.62,            leave: 1.00 },
-  ];
+  ].map(entry => ({
+    ...entry,
+    el: document.getElementById(entry.id),
+  }));
 
   // ── Build bottom progress indicator (dots double as click-to-navigate buttons)
   const indicator = document.createElement('div');
@@ -104,6 +109,9 @@ export function initScrollAnimations(isFallback = false) {
   // We hook into the scroll-driver progress to show/hide sections
   // Also manage z-index so the entering section always sits on top
   const cinematicSection = document.getElementById('section-cinematic');
+  const cinematicGrid = document.getElementById('cinematic-grid');
+  const scrollDriver = document.getElementById('scroll-driver');
+  let activeSectionEl = heroSection;
 
   // Current card index within the Featured Work section, and a lock so a
   // new wheel gesture can't interrupt an in-flight card transition.
@@ -126,26 +134,34 @@ export function initScrollAnimations(isFallback = false) {
         scrollHint.classList.toggle('is-visible', p < 0.015);
       }
 
-      sectionMap.forEach(({ id, enter, leave }, idx) => {
-        const el = document.getElementById(id);
-        if (!el) return;
+      let currentVisible = null;
+      let visibilityChanged = false;
+
+      for (let idx = 0; idx < sectionMap.length; idx++) {
+        const { id, enter, leave, el } = sectionMap[idx];
+        if (!el) continue;
         const visible = p >= enter && p <= leave;
+        if (visible) currentVisible = el;
         el.style.zIndex = visible ? 20 + idx : 10 + idx;
         if (visible && !el.classList.contains('is-visible')) {
           el.classList.add('is-visible');
+          visibilityChanged = true;
           // Reset the card index whenever the section is (re-)entered —
           // from the top if scrolling down, from the last card if scrolling up.
           if (id === 'section-cinematic') {
-            const grid = document.getElementById('cinematic-grid');
-            const count = grid ? grid.children.length : 1;
+            const count = cinematicGrid ? cinematicGrid.children.length : 1;
             cinematicIndex = p >= previousProgress ? 0 : Math.max(0, count - 1);
           }
         } else if (!visible && el.classList.contains('is-visible')) {
           el.classList.remove('is-visible');
+          visibilityChanged = true;
         }
         // Sync indicator dot
         dots[idx].classList.toggle('is-active', visible);
-      });
+      }
+
+      activeSectionEl = currentVisible;
+      if (visibilityChanged) syncVisibleVideos();
 
       // Drive cinematic section's scrollTop from GSAP progress.
       // 15% dead zones at both entry and exit keep the first/last cards pinned
@@ -238,15 +254,14 @@ export function initScrollAnimations(isFallback = false) {
   window.addEventListener('wheel', (e) => {
     e.preventDefault();
 
-    const active = document.querySelector('.scene-section.is-visible');
+    const active = activeSectionEl;
 
     // Featured Work: one wheel gesture = one card, paginated like the
     // section-to-section navigation instead of continuous free scroll.
     if (active && active.id === 'section-cinematic') {
       if (isCinematicSnapping) return; // ignore input mid-transition
 
-      const grid  = document.getElementById('cinematic-grid');
-      const cards = grid ? Array.from(grid.children) : [];
+      const cards = cinematicGrid ? Array.from(cinematicGrid.children) : [];
       const goingDown = e.deltaY > 0;
 
       const atFirst = cinematicIndex <= 0;
@@ -288,13 +303,20 @@ export function initScrollAnimations(isFallback = false) {
     }
   }, { passive: false, capture: true });
 
-  // ── Mouse parallax on glass panels
-  const panels = document.querySelectorAll('.glass-panel');
-  panels.forEach((el, i) => {
-    const depth = 0.1 + (i % 3) * 0.08;
-    glassEls.push({ el, depth });
-  });
+  // ── Mouse parallax on glass panels (skip when user prefers reduced motion)
+  if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    const panels = document.querySelectorAll('.glass-panel');
+    panels.forEach((el, i) => {
+      const depth = 0.1 + (i % 3) * 0.08;
+      glassEls.push({
+        el,
+        section: el.closest('.scene-section'),
+        depth,
+        setX: gsap.quickTo(el, 'x', { duration: 1.2, ease: 'power2.out' }),
+        setY: gsap.quickTo(el, 'y', { duration: 1.2, ease: 'power2.out' }),
+      });
+    });
 
-  window.addEventListener('mousemove', onMouseMove, { passive: true });
-  requestAnimationFrame(tickParallax);
+    window.addEventListener('mousemove', onMouseMove, { passive: true });
+  }
 }

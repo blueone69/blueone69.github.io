@@ -1,4 +1,4 @@
-import{m as y,r as c,l as d,bG as w,c as g,aV as C}from"./three.core-MjEdqQnE.js";const i=4e3,b=`
+import{m as y,r as c,l as d,bG as w,c as g,aV as C}from"./three.core-MjEdqQnE.js";const i=2500,b=`
   attribute float aSeed;
   attribute vec3 aColor;
 
@@ -32,9 +32,9 @@ import{m as y,r as c,l as d,bG as w,c as g,aV as C}from"./three.core-MjEdqQnE.js
     vec4 mvPos = modelViewMatrix * vec4(pos, 1.0);
     gl_Position = projectionMatrix * mvPos;
 
-    // Distance-based size attenuation
-    float dist = -mvPos.z;
-    gl_PointSize = uSize * (300.0 / dist);
+    // Distance-based size attenuation (clamped to avoid huge close-up overdraw quads)
+    float dist = max(-mvPos.z, 0.1);
+    gl_PointSize = min(uSize * (300.0 / dist), 48.0);
 
     // Fade near camera and far away
     vAlpha = smoothstep(0.0, 2.0, dist) * smoothstep(30.0, 10.0, dist);

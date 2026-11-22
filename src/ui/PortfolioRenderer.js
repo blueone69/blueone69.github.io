@@ -3,16 +3,59 @@ import { openLightbox } from './Lightbox.js';
 
 // ─── Helpers ──────────────────────────────────────────────────────────────
 
+const trackedVideos = new Set();
+const intersectingVideos = new WeakSet();
+let videoObserver = null;
+
+function isVideoSectionVisible(vid) {
+  if (document.body.classList.contains('css-fallback')) return true;
+  const section = vid.closest('.scene-section');
+  return !section || section.classList.contains('is-visible');
+}
+
+function updateSingleVideo(vid) {
+  const shouldPlay = intersectingVideos.has(vid) && isVideoSectionVisible(vid);
+  if (shouldPlay) {
+    if (vid.paused) vid.play().catch(() => {});
+  } else if (!vid.paused) {
+    vid.pause();
+  }
+}
+
+export function syncVisibleVideos() {
+  trackedVideos.forEach(updateSingleVideo);
+}
+
+function ensureVideoObserver() {
+  if (videoObserver || typeof IntersectionObserver === 'undefined') return;
+  videoObserver = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          intersectingVideos.add(entry.target);
+        } else {
+          intersectingVideos.delete(entry.target);
+        }
+        updateSingleVideo(entry.target);
+      });
+    },
+    { threshold: 0.1 }
+  );
+}
+
 function buildMediaEl(mediaObj) {
   if (mediaObj.type === 'video') {
+    ensureVideoObserver();
     const vid = document.createElement('video');
     vid.src = mediaObj.src;
-    vid.autoplay = true;
+    vid.preload = 'metadata';
     vid.loop = true;
     vid.muted = true;
     vid.playsInline = true;
     vid.controls = false;
     vid.className = 'data-capsule__media';
+    trackedVideos.add(vid);
+    if (videoObserver) videoObserver.observe(vid);
     return vid;
   }
   if (mediaObj.type === 'iframe') {
@@ -35,6 +78,7 @@ function buildMediaEl(mediaObj) {
   img.src = mediaObj.src;
   img.alt = mediaObj.alt || '';
   img.loading = 'lazy';
+  img.decoding = 'async';
   img.className = 'data-capsule__media';
   return img;
 }
