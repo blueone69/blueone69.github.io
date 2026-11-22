@@ -99,6 +99,21 @@ export const portfolioItems = [
     year: '2026',
   },
   {
+    id: 'katana',
+    title: 'Katana',
+    caption: '3D katana model and scabbard crafted in Blender, featuring rendered product views, sheathed and unsheathed variants, and wireframe presentation.',
+    media: [
+      { src: '/Product_1.png', type: 'image', alt: 'Katana — Full Presentation Render' },
+      { src: '/Product_2_Fixed.png', type: 'image', alt: 'Katana — Wireframe Presentation' },
+      { src: '/Katana.png', type: 'image', alt: 'Katana — Unsheathed Render' },
+      { src: '/Katana_sheted.png', type: 'image', alt: 'Katana — Sheathed Render' },
+      { src: '/Katana_sheet.png', type: 'image', alt: 'Katana — Scabbard Render' },
+    ],
+    category: 'cinematic',
+    tools: ['Blender'],
+    year: '2026',
+  },
+  {
     id: 'robot',
     title: 'Retro-Futuristic Robot Droid',
     caption: 'Solo project — retro-futuristic robot droid design. Concept-driven modeling.',
